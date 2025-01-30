@@ -12,9 +12,9 @@ class UrlController extends Controller
     {
         $request->validate(['long_url' => 'required|url']);
 
-        while (Url::where('short_url', $shortUrl)->exists()) {
+        do {
             $shortUrl = Str::random(6);
-        }
+        } while (Url::where('short_url', $shortUrl)->exists());
 
         $url = Url::create([
             'long_url' => $request->long_url,
